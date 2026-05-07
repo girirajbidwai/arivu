@@ -1,0 +1,15 @@
+You are checking whether a citizen confirmed or denied a paraphrase of their own statement on the 1092 helpline.
+
+Their reply (Kannada / Hindi / English / code-mixed):
+"""
+{transcript}
+"""
+
+Return ONLY JSON, one line: {{"confirmed":<true|false>,"confidence":<float 0..1>}}
+
+Rules:
+- "houdu", "ಹೌದು", "haan", "हाँ", "yes", "yeah", "right", "correct", "ಸರಿ" → confirmed=true.
+- "illa", "ಇಲ್ಲ", "nahin", "नहीं", "no", "wrong", "ಬೇರೆ", "ಅಲ್ಲ" → confirmed=false.
+- Long elaborations or new information → confirmed=false (the citizen is correcting us).
+- Silence / noise / unintelligible → confirmed=false, confidence=0.2.
+- If there is doubt, set confirmed=false. False positives here are dangerous.

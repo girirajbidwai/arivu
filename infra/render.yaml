@@ -1,0 +1,63 @@
+# Render service definitions — voice + brain + dashboard-api.
+# One repo, three Python services. Vercel hosts dashboard-web.
+#
+# To deploy: connect the repo to Render, then `Sync from Blueprint`.
+# Set the secrets in the Render dashboard, not in this file.
+
+services:
+  - type: web
+    name: arivu-voice
+    runtime: python
+    plan: starter
+    rootDir: voice
+    buildCommand: |
+      pip install --upgrade pip uv
+      uv pip install --system -e .
+    startCommand: uvicorn voice.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_PHONE_NUMBER
+        sync: false
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: BRAIN_SERVICE_URL
+        value: https://arivu-brain.onrender.com
+      - key: DASHBOARD_API_URL
+        value: https://arivu-dashboard-api.onrender.com
+
+  - type: web
+    name: arivu-brain
+    runtime: python
+    plan: starter
+    rootDir: voice
+    buildCommand: |
+      pip install --upgrade pip uv
+      uv pip install --system -e .
+    startCommand: uvicorn voice.brain.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+
+  - type: web
+    name: arivu-dashboard-api
+    runtime: python
+    plan: free
+    rootDir: dashboard-api
+    buildCommand: |
+      pip install --upgrade pip uv
+      uv pip install --system -e .
+    startCommand: uvicorn dashboard_api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: BRAIN_SERVICE_URL
+        value: https://arivu-brain.onrender.com

@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+  voice:
+    build:
+      context: ./voice
+    working_dir: /app
+    command: uvicorn voice.main:app --host 0.0.0.0 --port 8000 --reload
+    env_file:
+      - ./voice/.env
+    environment:
+      BRAIN_SERVICE_URL: http://brain:8002
+      DASHBOARD_API_URL: http://dashboard-api:8001
+    volumes:
+      - ./voice:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - brain
+      - dashboard-api
+
+  brain:
+    build:
+      context: ./voice
+    working_dir: /app
+    command: uvicorn voice.brain.main:app --host 0.0.0.0 --port 8002 --reload
+    env_file:
+      - ./voice/.env
+    volumes:
+      - ./voice:/app
+    ports:
+      - "8002:8002"
+
+  dashboard-api:
+    image: python:3.11-slim
+    working_dir: /app
+    command: >
+      sh -lc "pip install --no-cache-dir uv &&
+              uv pip install --system -e . &&
+              uvicorn dashboard_api.main:app --host 0.0.0.0 --port 8001 --reload"
+    env_file:
+      - ./dashboard-api/.env
+    volumes:
+      - ./dashboard-api:/app
+    ports:
+      - "8001:8001"
+
+  dashboard-web:
+    image: node:20-alpine
+    working_dir: /app
+    command: >
+      sh -lc "corepack enable &&
+              pnpm install &&
+              pnpm dev --host 0.0.0.0 --port 3000"
+    environment:
+      NEXT_PUBLIC_DASHBOARD_API_URL: http://localhost:8001
+      NEXT_PUBLIC_VOICE_SERVICE_URL: http://localhost:8000
+    volumes:
+      - ./dashboard-web:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - dashboard-api

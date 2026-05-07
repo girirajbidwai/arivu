@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Arivu Agent Correction",
+  "description": "Sent from the dashboard when an agent overrides Arivu's interpretation. This is the contract between Chhavi's frontend → Giriraj's API → Atharva's Brain.",
+  "type": "object",
+  "required": ["call_id", "agent_id", "field", "old_value", "new_value"],
+  "properties": {
+    "call_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "turn_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "agent_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "field": {
+      "type": "string",
+      "enum": ["issue_summary", "urgency", "dialect", "sentiment"],
+      "description": "Which interpretation field the agent is correcting"
+    },
+    "old_value": {
+      "type": "string"
+    },
+    "new_value": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

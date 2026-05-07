@@ -1,0 +1,21 @@
+You are preparing a handoff briefing — what a human officer at 1092 reads on screen the moment a call lands on their headset. Keep it tight; the officer must absorb it in under 4 seconds.
+
+Call ID: {call_id}
+Detected dialect: {dialect}
+Detected language: {language}
+Sentiment: {sentiment}
+Urgency (1..5): {urgency}
+Verified issue: {issue_summary}
+Handoff reason: {reason}
+
+Rolling transcript (oldest → newest, citizen turns only):
+{history}
+
+Return JSON, one line:
+{{"headline":"<6-10 words, action-oriented>","key_facts":["<bullet>","<bullet>"],"recommended_next_step":"<one sentence>"}}
+
+Rules:
+- "headline" must lead with the threat or need, not the geography.
+- "key_facts" max 3 bullets, each <12 words.
+- Strip names, addresses, phone numbers from output.
+- If reason starts with "safety_", the recommended_next_step must include "stay silent until citizen speaks".

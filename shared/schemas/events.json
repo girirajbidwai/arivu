@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Arivu Voice Event",
+  "description": "Every event the voice pipeline publishes to Supabase Realtime. This is the contract between Atharva's voice service and Giriraj's dashboard backend.",
+  "type": "object",
+  "required": ["event_type", "call_id", "timestamp"],
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "call_started",
+        "turn_started",
+        "transcript_partial",
+        "transcript_final",
+        "dialect_detected",
+        "sentiment_updated",
+        "verification_pending",
+        "verification_confirmed",
+        "verification_failed",
+        "safety_alert",
+        "handoff_initiated",
+        "interpreter_mode_active",
+        "call_ended"
+      ]
+    },
+    "call_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "turn_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "speaker": {
+          "type": "string",
+          "enum": ["citizen", "agent", "arivu", "system"]
+        },
+        "transcript": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string",
+          "enum": ["kn-IN", "hi-IN", "en-IN"]
+        },
+        "dialect": {
+          "type": "string",
+          "enum": ["dharwad", "mangaluru", "mysuru", "bengaluru", "unknown"]
+        },
+        "dialect_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "sentiment": {
+          "type": "string",
+          "enum": ["neutral", "confused", "anxious", "fearful", "distressed", "calm"]
+        },
+        "sentiment_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "issue_summary": {
+          "type": "string"
+        },
+        "urgency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "verify_phrase": {
+          "type": "string"
+        },
+        "safety_trigger": {
+          "type": "string",
+          "enum": ["whisper_detected", "silent_after_distress", "third_voice", null]
+        },
+        "handoff_reason": {
+          "type": "string"
+        },
+        "fsm_state": {
+          "type": "string",
+          "enum": ["pending", "verifying", "verified", "handoff"]
+        },
+        "reasoning_trace": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+dist/
+.next/
+out/
+build/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
+voice/voice/brain/providers/__pycache__/
+dashboard-api/__pycache__/
+voice/__pycache__/
+shared/__pycache__/

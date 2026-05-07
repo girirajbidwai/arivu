@@ -1,0 +1,45 @@
+{
+  "_comment": "Lexical markers per dialect. Each marker has a regex pattern and a weight 0..1. The classifier sums weights and normalises to a confidence score. Patterns are matched as substring on Kannada NFC text — no need to be perfect, just discriminative.",
+  "dharwad": {
+    "weight_floor": 0.15,
+    "markers": [
+      {"pattern": "ರೀ", "weight": 0.25, "note": "polite suffix"},
+      {"pattern": "ಹೋಗ್ತಿ", "weight": 0.20, "note": "going (Dharwad form)"},
+      {"pattern": "ಬರಾಕ", "weight": 0.20, "note": "to come"},
+      {"pattern": "ಮಾಡ್ಬೇಕ", "weight": 0.15, "note": "must do"},
+      {"pattern": "ಎನ್ನಾ", "weight": 0.20, "note": "what (Dharwad)"},
+      {"pattern": "ತೊಂದರ್", "weight": 0.18, "note": "trouble (clipped)"}
+    ]
+  },
+  "mangaluru": {
+    "weight_floor": 0.15,
+    "markers": [
+      {"pattern": "ಆಯಿತಾ", "weight": 0.20, "note": "tag question"},
+      {"pattern": "ಅಪ್ಪಾ", "weight": 0.18, "note": "Tulu-influenced address"},
+      {"pattern": "ಬೇಡಾ", "weight": 0.18, "note": "polite refusal"},
+      {"pattern": "ಎನ್ರಾ", "weight": 0.20, "note": "what-friend"},
+      {"pattern": "ಬುಲ್ಲಿ", "weight": 0.18, "note": "Tulu loanword"}
+    ]
+  },
+  "mysuru": {
+    "weight_floor": 0.10,
+    "markers": [
+      {"pattern": "ಆಗಿದೆ", "weight": 0.15, "note": "literary perfect"},
+      {"pattern": "ಆಗುತ್ತದೆ", "weight": 0.15, "note": "textbook future"},
+      {"pattern": "ಮಾಡುತ್ತಾರೆ", "weight": 0.18, "note": "honorific verb"},
+      {"pattern": "ಧನ್ಯವಾದಗಳು", "weight": 0.15, "note": "formal thanks"},
+      {"pattern": "ಸ್ವಾಮಿ", "weight": 0.10, "note": "respectful address"}
+    ]
+  },
+  "bengaluru": {
+    "weight_floor": 0.10,
+    "markers": [
+      {"pattern": "ಮಾಡ್ತಿದೀನಿ", "weight": 0.18, "note": "I am doing"},
+      {"pattern": "ಬೇಕಿತ್ತು", "weight": 0.15, "note": "I wanted (urban)"},
+      {"pattern": "you know", "weight": 0.20, "note": "code-mix marker"},
+      {"pattern": "actually", "weight": 0.18, "note": "code-mix marker"},
+      {"pattern": "ಸಾರ್", "weight": 0.18, "note": "sir (urban honorific)"},
+      {"pattern": "ಆಪ್ಸ್", "weight": 0.15, "note": "office (loanword)"}
+    ]
+  }
+}

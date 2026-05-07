@@ -1,0 +1,43 @@
+[project]
+name = "arivu-voice"
+version = "0.1.0"
+description = "Arivu voice pipeline + brain service — real-time Kannada voice intelligence for 1092"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pipecat-ai>=0.0.60",
+    "pipecat-ai[silero]>=0.0.60",
+    "google-genai>=1.75.0",
+    "google-cloud-speech>=2.38.0",
+    "google-cloud-texttospeech>=2.36.0",
+    "sarvamai>=0.1.28",
+    "twilio>=9.0.0",
+    "supabase>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "httpx>=0.28.0",
+    "numpy>=1.26.0",
+    "pydantic>=2.0.0",
+    "websockets>=13.0",
+    "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["voice"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
